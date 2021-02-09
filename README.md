@@ -1,2 +1,2 @@
 # nestjs-restful
-nestjs-restful
+nestjs-restful-api

@@ -1,0 +1,16 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src/core",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "@nestjs/graphql/plugin",
+        "options": {
+          "typeFileNameSuffix": [
+            ".entity.ts"
+          ]
+        }
+      }
+    ]
+  }
+}
