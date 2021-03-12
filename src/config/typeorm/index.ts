@@ -3,7 +3,7 @@ import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm'
 import {
     getMetadataArgsStorage,
 } from 'typeorm'
-import { MLAB_URL } from '@environment'
+import { MLAB_URL } from '@/environment'
 
 @Injectable()
 export class TypeOrmService implements TypeOrmOptionsFactory {

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs'
 import { tap } from 'rxjs/operators'
 import chalk from 'chalk'
 
-import { PRIMARY_COLOR } from '@environment'
+import { PRIMARY_COLOR } from '@/environment'
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {

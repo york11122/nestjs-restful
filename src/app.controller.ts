@@ -13,7 +13,7 @@ import {
 // import { InjectQueue } from '@nestjs/bull'
 // import { Queue } from 'bull'
 
-import { STATIC } from '@environment'
+import { STATIC } from '@/environment'
 
 @Controller()
 export class AppController {
@@ -23,12 +23,6 @@ export class AppController {
     @Inject(CACHE_MANAGER) private cacheManager
   ) { }
 
-  @Get(`${STATIC!}/:fileId`)
-  getUpload (@Param('fileId') fileId, @Res() res): any {
-    return res.sendFile(fileId, {
-      root: STATIC!
-    })
-  }
 
   @Post('/gitlab')
   postGitlab (@Res() res): any {

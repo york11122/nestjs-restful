@@ -2,9 +2,9 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CurrentUser } from '../../common/decorators/user.decorator'
 import { UserService } from './user.service';
 import { User } from './user.entity'
-import { createUserInput } from './user.dto'
+import { createUserInput, verifyPhoneInput } from './user.dto'
 import { UseGuards, ClassSerializerInterceptor, UseInterceptors, UploadedFile } from '@nestjs/common'
-import { JWTAuthGuard } from '@common'
+import { JWTAuthGuard } from '@/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 
 @Controller('user')
@@ -19,15 +19,23 @@ export class UserController {
     }
 
     @UseInterceptors(ClassSerializerInterceptor)
-    @Get('verify/:mailId')
-    async verifyEmail (@Param('mailId') mailId: string): Promise<User> {
+    @Post('verify/mail')
+    async verifyEmail (@Body('mailId') mailId: string): Promise<User> {
         return this.userService.verifyEmail(mailId)
+    }
+
+    @UseInterceptors(ClassSerializerInterceptor)
+    @UseGuards(JWTAuthGuard)
+    @Post('verify/phone')
+    async verifyPhone (@Body() param: verifyPhoneInput, @CurrentUser() currentUser: User): Promise<User> {
+        const { smsId, code } = param
+        return this.userService.verifySMS(smsId, code, currentUser)
     }
 
     @UseInterceptors(ClassSerializerInterceptor)
     @Post()
     async createUser (@Body() param: createUserInput): Promise<User> {
-        let { account, password, name } = param
+        const { account, password, name } = param
         return await this.userService.createUser(account, password, name)
     }
 

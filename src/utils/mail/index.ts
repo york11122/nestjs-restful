@@ -1,14 +1,14 @@
 import * as nodemailer from 'nodemailer'
 import * as handlebars from 'handlebars'
 import * as fs from 'fs'
-import { User } from '@core/user/user.entity'
+import { User } from '@/core/user/user.entity'
 
 import {
     AUTHOR,
     ISSUER,
     NODEMAILER_USER,
     NODEMAILER_PASS
-} from '@environment'
+} from '@/environment'
 
 export const sendMail = async (
     user: User,
@@ -67,7 +67,6 @@ export const sendMail = async (
             if (err) {
                 throw err
             }
-            else console.log(info)
         })
 
         transporter.close()

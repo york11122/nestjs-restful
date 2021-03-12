@@ -4,7 +4,7 @@ import {
     CLOUDINARY_NAME,
     CLOUDINARY_API_KEY,
     CLOUDINARY_API_SECRET
-} from '@environment'
+} from '@/environment'
 import { GridFSBucketReadStream } from 'typeorm'
 
 /**

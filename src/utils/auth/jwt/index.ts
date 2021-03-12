@@ -1,14 +1,14 @@
 import { sign, verify } from 'jsonwebtoken'
-import { User } from '@core/user/user.entity'
-import { AuthTokens } from '@core/auth/auth.dto'
-import { UnauthenticatedError } from '../../../common/errors/custom.error'
+import { User } from '@/core/user/user.entity'
+import { AuthTokens } from '@/core/auth/auth.dto'
+import { UnauthenticatedError } from '@/common/errors/custom.error'
 import {
     ISSUER,
     ACCESS_TOKEN_SECRET,
     REFRESH_TOKEN_SECRET,
     EMAIL_TOKEN_SECRET,
     RESETPASS_TOKEN_SECRET,
-} from '@environment'
+} from '@/environment'
 
 type TokenType =
     | 'accessToken'
@@ -67,9 +67,9 @@ export const verifyToken = async (
 ): Promise<any> => {
     return await verify(token, common[type].privateKey, async (err, data) => {
         if (err) {
-            throw new UnauthenticatedError()
+            return [err, null]
         }
-        return data
+        return [null, data]
     })
 }
 
@@ -88,6 +88,5 @@ export const tradeToken = async (user: User): Promise<AuthTokens> => {
 
     const accessToken = await generateToken(user, 'accessToken')
     const refreshToken = await generateToken(user, 'refreshToken')
-
     return { accessToken, refreshToken }
 }

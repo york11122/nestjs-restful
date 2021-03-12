@@ -8,3 +8,8 @@ export class createUserInput {
     @IsNotEmpty()
     name: string
 }
+
+export class verifyPhoneInput {
+    smsId: string
+    code: string
+}

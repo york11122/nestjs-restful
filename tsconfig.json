@@ -11,13 +11,8 @@
     "baseUrl": "src",
     "incremental": true,
     "paths": {
-      "@common": ["common"],
-      "@core/*":["core/*"],
-      "@config/*":["config/*"],
-      "@schemaDirectives":["config/graphql/schemaDirectives"],
-      "@environment":["environment"],
-      "@utils/*":["utils/*"],
-      "@fieldMiddleware/*":["config/graphql/fieldMiddleware/*"]
+      "@": ["./"],
+      "@/*": ["./*"]
 		}
   },
   "exclude": ["node_modules", "dist"]

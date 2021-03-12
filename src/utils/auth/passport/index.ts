@@ -11,7 +11,7 @@ import {
     GOOGLE_CLIENT_SECRET,
     LINE_CHANNEL_ID,
     LINE_CHANNEL_SECRET
-} from '@environment'
+} from '@/environment'
 
 interface OAuthResponse {
     readonly data: any

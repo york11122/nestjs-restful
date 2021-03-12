@@ -2,15 +2,20 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { ObjectID, Repository } from 'typeorm'
 import { User } from './user.entity'
-import { hashPassword } from '@utils/password'
-import { uploadFile } from '@utils/upload'
-import { UnprocessableError } from '../../common/errors/custom.error'
-import { ERROR_CODE } from '../../common/constants/index'
-import { Mail } from '@core/mail/mail.entity'
+import { hashPassword } from '@/utils/password'
+import { uploadFile } from '@/utils/upload'
+import { UnprocessableError } from '@/common/errors/custom.error'
+import { ERROR_CODE } from '@/common/constants/index'
+import { MailService } from '@/core/mail/mail.service'
+import { SmsService } from '@/core/sms/sms.service'
+
 @Injectable()
 export class UserService {
-    constructor(@InjectRepository(User) private readonly userRepository: Repository<User>,
-        @InjectRepository(Mail) private readonly mailRepository: Repository<Mail>) { }
+    constructor(
+        @InjectRepository(User) private readonly userRepository: Repository<User>,
+        private readonly mailService: MailService,
+        private readonly smsService: SmsService
+    ) { }
 
     public async findUserByID (id: string) {
         return await this.userRepository.findOne({ where: { _id: id } })
@@ -42,21 +47,18 @@ export class UserService {
 
 
     public async verifyEmail (mailId: string): Promise<User> {
-        const mail = await this.mailRepository.findOne({ where: { _id: mailId } })
-        if (!mail) {
-            throw new UnprocessableError({ message: 'Email not exist.', code: ERROR_CODE.EMAIL_NONE_EXISTED })
-        }
-        if (mail.expiredAt <= new Date()) {
-            throw new UnprocessableError({ message: 'Email expired.', code: ERROR_CODE.EMAIL_EXPIRED })
-        }
+        const mail = await this.mailService.verifyMail(mailId)
         const user = await this.userRepository.findOne({ where: { _id: mail.userId } })
         if (!user) {
             throw new UnprocessableError({ message: 'User not exist.', code: ERROR_CODE.USER_NOT_EXIST })
         }
-        if (user.isVerified) {
-            throw new UnprocessableError({ message: 'Your email has been verified', code: ERROR_CODE.ALREADY_VERIFED })
-        }
         return await this.userRepository.save(new User({ ...user, isVerified: true, email: mail.email }))
+    }
+
+
+    public async verifySMS (smsId: string, verify_code: string, user: User): Promise<User> {
+        const sms = await this.smsService.VerifySMS(smsId, verify_code)
+        return await this.userRepository.save(new User({ ...user, phone_number: sms.phone_number }))
     }
 
 }

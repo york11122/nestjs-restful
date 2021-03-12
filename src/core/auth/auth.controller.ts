@@ -1,5 +1,5 @@
-import { Controller, Post, Body, Req, Res, HttpStatus } from '@nestjs/common';
-import { AuthService } from '@core/auth/auth.service';
+import { Controller, Post, Body, Req, Res } from '@nestjs/common';
+import { AuthService } from '@/core/auth/auth.service';
 import { loginUserInput, AuthTokens } from './auth.dto'
 
 @Controller('auth')
@@ -13,7 +13,7 @@ export class AuthController {
     }
 
     @Post('line')
-    async oauthLine (@Body() token: string, @Req() req, @Res() res): Promise<AuthTokens> {
+    async oauthLine (@Body('token') token: string, @Req() req, @Res({ passthrough: true }) res): Promise<AuthTokens> {
         req.body = {
             ...req.body,
             access_token: token
@@ -22,7 +22,7 @@ export class AuthController {
     }
 
     @Post('facebook')
-    async oauthFacebook (@Body() token: string, @Req() req, @Res() res): Promise<AuthTokens> {
+    async oauthFacebook (@Body('token') token: string, @Req() req, @Res({ passthrough: true }) res): Promise<AuthTokens> {
         req.body = {
             ...req.body,
             access_token: token
@@ -31,7 +31,7 @@ export class AuthController {
     }
 
     @Post('google')
-    async oauthGoogle (@Body() token: string, @Req() req, @Res() res): Promise<AuthTokens> {
+    async oauthGoogle (@Body('token') token: string, @Req() req, @Res({ passthrough: true }) res): Promise<AuthTokens> {
         req.body = {
             ...req.body,
             access_token: token

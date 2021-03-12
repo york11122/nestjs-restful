@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import {
   ValidationPipe, LoggingInterceptor, TimeoutInterceptor
-} from '@common'
+} from '@/common'
 import { Logger } from '@nestjs/common'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import * as bodyParser from 'body-parser'
@@ -19,7 +19,7 @@ import {
   RATE_LIMIT_MAX,
   STATIC
 
-} from '@environment'
+} from '@/environment'
 
 import { getConnection } from 'typeorm'
 

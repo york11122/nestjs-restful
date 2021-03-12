@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@core/user/user.entity'
-import { Mail, MailType } from '@core/mail/mail.entity'
-import { sendMail } from '@utils/mail'
+import { User } from '@/core/user/user.entity'
+import { Mail, MailType } from '@/core/mail/mail.entity'
+import { sendMail } from '@/utils/mail'
 import { InjectRepository } from '@nestjs/typeorm'
-import { ObjectID, Repository } from 'typeorm'
-import { UnprocessableError } from '../../common/errors/custom.error'
-import { ERROR_CODE } from '../../common/constants/index'
+import { Repository } from 'typeorm'
+import { UnprocessableError } from '@/common/errors/custom.error'
+import { ERROR_CODE } from '@/common/constants/index'
 import {
     DOMAIN,
     PORT
-} from '@environment'
+} from '@/environment'
 
 @Injectable()
 export class MailService {
@@ -55,6 +55,17 @@ export class MailService {
             throw new UnprocessableError({ message: 'Email not exist.', code: ERROR_CODE.EMAIL_NONE_EXISTED })
         }
         return await this.mailRepository.save(new Mail({ ...mail, isOpened: true }))
+    }
+
+    public async verifyMail (mailId: string): Promise<Mail> {
+        const mail = await this.mailRepository.findOne({ where: { _id: mailId } })
+        if (!mail) {
+            throw new UnprocessableError({ message: 'Email not exist.', code: ERROR_CODE.EMAIL_NONE_EXISTED })
+        }
+        if (mail.expiredAt <= new Date()) {
+            throw new UnprocessableError({ message: 'Email expired.', code: ERROR_CODE.EMAIL_EXPIRED })
+        }
+        return mail
     }
 
 }

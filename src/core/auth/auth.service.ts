@@ -1,17 +1,17 @@
-import { Injectable, Req, Res, BadRequestException } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { ObjectID, Repository } from 'typeorm'
-import { User } from '@core/user/user.entity'
-import { AuthTokens } from "@core/auth/auth.dto";
-import { comparePassword } from "@utils/password";
-import { tradeToken } from "@utils/auth/jwt";
+import { Repository } from 'typeorm'
+import { User } from '@/core/user/user.entity'
+import { AuthTokens } from "@/core/auth/auth.dto";
+import { comparePassword } from "@/utils/password";
+import { tradeToken } from "@/utils/auth/jwt";
 import {
     authenticateLine,
     authenticateFacebook,
     authenticateGoogle
-} from '@utils/auth/passport'
-import { UnprocessableError } from '../../common/errors/custom.error'
-import { ERROR_CODE } from '../../common/constants/index'
+} from '@/utils/auth/passport'
+import { UnprocessableError } from '@/common/errors/custom.error'
+import { ERROR_CODE } from '@/common/constants/index'
 
 @Injectable()
 export class AuthService {
@@ -45,7 +45,6 @@ export class AuthService {
                     'line._id': profile.id
                 }
             })
-
             if (!user) {
                 // add create User
                 user = await this.userRepository.save(
