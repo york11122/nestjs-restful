@@ -23,7 +23,7 @@ import {
 } from '@/environment';
 
 import { getConnection } from 'typeorm';
-
+declare const module: any;
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
@@ -86,5 +86,10 @@ async function bootstrap() {
         'Bootstrap',
         false,
       );
+
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
 }
 bootstrap();
