@@ -26,7 +26,7 @@ export class CartService {
     private readonly productRepository: MongoRepository<Product>,
   ) {}
 
-  public async createCart(user: User): Promise<Cart> {
+  public async findOrCreate(user: User): Promise<Cart> {
     const cart = await this.cartRepository.findOne({
       where: { ownerId: user._id },
     });
@@ -131,7 +131,6 @@ export class CartService {
     }
 
     let item: CartItem = _.find(cart.itemList, { _id: ItemId });
-    console.log(item);
     if (!item) {
       throw new UnprocessableError({
         message: 'item not existed.',
@@ -140,7 +139,6 @@ export class CartService {
     }
 
     if (item.createor._id !== user._id) {
-      console.log(item.createor._id, user._id);
       throw new UnauthorizedError();
     }
 

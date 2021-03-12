@@ -11,6 +11,7 @@ import { SmsModule } from '@/core/sms/sms.module';
 import { SocketModule } from '@/core/socket/socket.module';
 import { CartModule } from './core/cart/cart.module';
 import { ProductModule } from './core/product/product.module';
+import { OrderModule } from './core/order/order.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ProductModule } from './core/product/product.module';
     SocketModule,
     CartModule,
     ProductModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

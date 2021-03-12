@@ -29,7 +29,7 @@ export class CartController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get('me')
   async myCart(@CurrentUser() currentUser: User): Promise<Cart> {
-    return await this.cartService.createCart(currentUser);
+    return await this.cartService.findOrCreate(currentUser);
   }
 
   @UseGuards(JWTAuthGuard)
