@@ -13,7 +13,7 @@
     "paths": {
       "@": ["./"],
       "@/*": ["./*"]
-		}
+    }
   },
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["dist"]
 }
