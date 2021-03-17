@@ -49,7 +49,6 @@ export class CartController {
     const { productId, cart_id, quantity, addOn } = input;
     return await this.cartService.addItem(
       productId,
-      cart_id,
       currentUser,
       addOn,
       quantity,
@@ -66,7 +65,6 @@ export class CartController {
     const { itemId, cart_id, quantity, addOn } = input;
     return await this.cartService.updateItem(
       itemId,
-      cart_id,
       addOn,
       quantity,
       currentUser,
@@ -81,6 +79,6 @@ export class CartController {
     @CurrentUser() currentUser: User,
   ): Promise<Cart> {
     const { itemId, cart_id } = input;
-    return await this.cartService.removeItem(itemId, cart_id, currentUser);
+    return await this.cartService.removeItem(itemId, currentUser);
   }
 }

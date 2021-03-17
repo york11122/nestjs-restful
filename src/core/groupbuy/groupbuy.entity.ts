@@ -1,18 +1,12 @@
 import { Entity, Column, ObjectIdColumn } from 'typeorm';
 import { Expose, Exclude } from 'class-transformer';
-import { User } from '@/core/user/user.entity';
-import { Product } from '@/core/product/product.entity';
 import * as uuid from 'uuid';
-
-export class CartItem {
-  _id: string;
-  item: Partial<Product>;
-  addOn: object;
-  quantity: number;
-}
+import * as moment from 'moment';
+import { User } from '@/core/user/user.entity';
+import { Cart } from '@/core/cart/cart.entity';
 
 @Entity()
-export class Cart {
+export class GroupBuy {
   @Expose()
   @ObjectIdColumn()
   _id: string;
@@ -22,23 +16,22 @@ export class Cart {
   owner: User;
 
   @Expose()
-  @Column()
-  itemList: CartItem[];
+  @Column((type) => Cart)
+  carts: Cart[];
 
   @Expose()
   @Column()
   createdAt: Date;
-
   @Expose()
   @Column()
   updatedAt: Date;
 
-  constructor(cart: Partial<Cart>) {
-    if (cart) {
-      Object.assign(this, cart);
+  constructor(groupbuy: Partial<GroupBuy>) {
+    if (groupbuy) {
+      Object.assign(this, groupbuy);
       this._id = this._id || uuid.v1();
       this.owner = this.owner || undefined;
-      this.itemList = this.itemList || [];
+      this.carts = this.carts || [];
       this.createdAt = this.createdAt || new Date();
       this.updatedAt = new Date();
     }

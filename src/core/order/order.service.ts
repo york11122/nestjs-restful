@@ -46,8 +46,6 @@ export class OrderService {
       new Order({
         ...order,
         userId: user._id,
-        itemList: cart.itemList,
-        isGroupBuy: cart.isGroupBuy,
       }),
     );
   }

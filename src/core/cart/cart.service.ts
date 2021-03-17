@@ -28,11 +28,12 @@ export class CartService {
 
   public async findOrCreate(user: User): Promise<Cart> {
     const cart = await this.cartRepository.findOne({
-      where: { ownerId: user._id },
+      where: { 'owner._id': user._id },
     });
     if (!cart) {
-      return await this.cartRepository.save(new Cart({ ownerId: user._id }));
+      return await this.cartRepository.save(new Cart({ owner: user }));
     }
+    console.log(cart);
     return cart;
   }
 
@@ -49,7 +50,6 @@ export class CartService {
 
   public async addItem(
     productId: string,
-    cart_id: string,
     user: User,
     addOn: object,
     quantity: number,
@@ -69,7 +69,7 @@ export class CartService {
 
     //取得購物車
     let cart = await this.cartRepository.findOne({
-      where: { _id: cart_id },
+      where: { 'owner._id': user._id },
     });
 
     //查無購物車
@@ -80,12 +80,12 @@ export class CartService {
       });
     }
     //非團購狀態亦非購物車擁有者
-    if (!cart.isGroupBuy && cart.ownerId !== user._id) {
+    if (cart.owner._id !== user._id) {
       throw new UnauthorizedError();
     }
     //加入購物車商品清單
     const res = await this.cartRepository.findOneAndUpdate(
-      { _id: cart_id },
+      { _id: cart._id },
       {
         $push: {
           itemList: {
@@ -107,15 +107,11 @@ export class CartService {
     return res.value;
   }
 
-  public async removeItem(
-    ItemId: string,
-    cart_id: string,
-    user: User,
-  ): Promise<Cart> {
+  public async removeItem(ItemId: string, user: User): Promise<Cart> {
     //取得購物車
 
     let cart = await this.cartRepository.findOne({
-      where: { _id: cart_id },
+      where: { 'owner._id': user._id },
     });
 
     //查無購物車
@@ -126,7 +122,7 @@ export class CartService {
       });
     }
     //非團購狀態亦非購物車擁有者
-    if (!cart.isGroupBuy && cart.ownerId !== user._id) {
+    if (cart.owner._id !== user._id) {
       throw new UnauthorizedError();
     }
 
@@ -138,14 +134,10 @@ export class CartService {
       });
     }
 
-    if (item.createor._id !== user._id) {
-      throw new UnauthorizedError();
-    }
-
     //移除購物車商品清單
     const res = await this.cartRepository.findOneAndUpdate(
       {
-        _id: cart_id,
+        _id: cart._id,
       },
       { $pull: { itemList: { _id: ItemId } } },
       { returnOriginal: false },
@@ -155,14 +147,13 @@ export class CartService {
 
   public async updateItem(
     ItemId: string,
-    cart_id: string,
     addOn: object,
     quantity: number,
     user: User,
   ): Promise<Cart> {
     //取得購物車
     let cart = await this.cartRepository.findOne({
-      where: { _id: cart_id },
+      where: { 'owner._id': user._id },
     });
 
     //查無購物車
@@ -173,13 +164,14 @@ export class CartService {
       });
     }
     //非團購狀態亦非購物車擁有者
-    if (!cart.isGroupBuy && cart.ownerId !== user._id) {
+    if (cart.owner._id !== user._id) {
       throw new UnauthorizedError();
     }
+
     //修改商品
     const res = await this.cartRepository.findOneAndUpdate(
       {
-        _id: cart_id,
+        _id: cart._id,
         itemList: { $elemMatch: { _id: ItemId } },
       },
       { $set: { 'itemList.$.quantity': quantity } },
