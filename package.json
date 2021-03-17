@@ -33,6 +33,7 @@
     "@nestjs/websockets": "^7.6.12",
     "bcrypt": "^5.0.0",
     "cache-manager": "^3.4.0",
+    "chalk": "^2.4.2",
     "class-transformer": "^0.3.2",
     "class-validator": "^0.13.1",
     "cloudinary": "^1.23.0",
