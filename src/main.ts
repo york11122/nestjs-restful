@@ -72,7 +72,7 @@ async function bootstrap() {
 
   // NOTE: serve static
   app.useStaticAssets(join(__dirname, `../${STATIC}`));
-app.enableCors();
+  app.enableCors();
   const server = await app.listen(process.env.PORT || PORT!);
 
   NODE_ENV !== 'production'
