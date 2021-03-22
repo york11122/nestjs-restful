@@ -13,8 +13,8 @@ export class AuthController {
   ): Promise<AuthTokens> {
     let { account, password } = param;
     const authTokens = await this.authService.login(account, password);
-    res.setCookie('access-token', authTokens.accessToken);
-    res.setCookie('refresh-token', authTokens.refreshToken);
+    res.cookie('access-token', authTokens.accessToken);
+    res.cookie('refresh-token', authTokens.refreshToken);
     return authTokens;
   }
 
@@ -29,8 +29,8 @@ export class AuthController {
       access_token: token,
     };
     const authTokens = await this.authService.oauthLine(req, res);
-    res.setCookie('access-token', authTokens.accessToken);
-    res.setCookie('refresh-token', authTokens.refreshToken);
+    res.cookie('access-token', authTokens.accessToken);
+    res.cookie('refresh-token', authTokens.refreshToken);
     return authTokens;
   }
 
@@ -45,8 +45,8 @@ export class AuthController {
       access_token: token,
     };
     const authTokens = await this.authService.oauthFacebook(req, res);
-    res.setCookie('access-token', authTokens.accessToken);
-    res.setCookie('refresh-token', authTokens.refreshToken);
+    res.cookie('access-token', authTokens.accessToken);
+    res.cookie('refresh-token', authTokens.refreshToken);
     return authTokens;
   }
 
@@ -61,8 +61,8 @@ export class AuthController {
       access_token: token,
     };
     const authTokens = await this.authService.oauthGoogle(req, res);
-    res.setCookie('access-token', authTokens.accessToken);
-    res.setCookie('refresh-token', authTokens.refreshToken);
+    res.cookie('access-token', authTokens.accessToken);
+    res.cookie('refresh-token', authTokens.refreshToken);
     return authTokens;
   }
 }
