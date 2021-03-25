@@ -13,9 +13,13 @@ import { CartModule } from './core/cart/cart.module';
 import { ProductModule } from './core/product/product.module';
 import { OrderModule } from './core/order/order.module';
 import { GroupBuyModule } from './core/groupbuy/groupbuy.module';
-
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+    }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmService,
     }),
