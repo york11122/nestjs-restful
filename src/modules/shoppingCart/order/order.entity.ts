@@ -1,7 +1,7 @@
 import { Entity, Column, ObjectIdColumn } from 'typeorm';
 import { Expose, Exclude } from 'class-transformer';
 import { User } from '@/core/user/user.entity';
-import { Product } from '@/core/product/product.entity';
+import { Product } from '@/modules/shoppingCart/product/product.entity';
 import * as uuid from 'uuid';
 
 export class CartItem {

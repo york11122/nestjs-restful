@@ -7,7 +7,7 @@ import {
   MongoRepository,
 } from 'typeorm';
 import { Order, OrderStatus } from './order.entity';
-import { Cart, CartItem } from '@/core/cart/cart.entity';
+import { Cart, CartItem } from '@/modules/shoppingCart/cart/cart.entity';
 import {
   UnprocessableError,
   UnauthorizedError,

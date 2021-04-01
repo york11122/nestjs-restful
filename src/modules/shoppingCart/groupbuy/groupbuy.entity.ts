@@ -3,7 +3,7 @@ import { Expose, Exclude } from 'class-transformer';
 import * as uuid from 'uuid';
 import * as moment from 'moment';
 import { User } from '@/core/user/user.entity';
-import { Cart } from '@/core/cart/cart.entity';
+import { Cart } from '@/modules/shoppingCart/cart/cart.entity';
 
 @Entity()
 export class GroupBuy {

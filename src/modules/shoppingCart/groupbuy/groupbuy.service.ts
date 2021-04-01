@@ -2,11 +2,11 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ObjectID, MongoRepository } from 'typeorm';
 import { GroupBuy } from './groupbuy.entity';
-import { Cart } from '@/core/cart/cart.entity';
+import { Cart } from '@/modules/shoppingCart/cart/cart.entity';
 
 import { UnprocessableError } from '@/common/errors/custom.error';
 import { ERROR_CODE } from '@/common/constants/index';
-import { User } from '../user/user.entity';
+import { User } from '../../../core/user/user.entity';
 
 @Injectable()
 export class GroupBuyService {

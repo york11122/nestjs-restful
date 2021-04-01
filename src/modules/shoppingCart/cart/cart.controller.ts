@@ -15,7 +15,7 @@ import {
 import { CartService } from './cart.service';
 import { Cart } from './cart.entity';
 import { JWTAuthGuard } from '@/common';
-import { CurrentUser } from '../../common/decorators/user.decorator';
+import { CurrentUser } from '../../../common/decorators/user.decorator';
 import { User } from '@/core/user/user.entity';
 import { addItemInput, removeItemInput, updateItemInput } from './cart.dto';
 

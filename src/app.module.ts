@@ -9,10 +9,10 @@ import { CacheService } from '@/config/cache';
 import { MailModule } from '@/core/mail/mail.module';
 import { SmsModule } from '@/core/sms/sms.module';
 import { SocketModule } from '@/core/socket/socket.module';
-import { CartModule } from './core/cart/cart.module';
-import { ProductModule } from './core/product/product.module';
-import { OrderModule } from './core/order/order.module';
-import { GroupBuyModule } from './core/groupbuy/groupbuy.module';
+import { CartModule } from '@/modules/shoppingCart/cart/cart.module';
+import { ProductModule } from '@/modules/shoppingCart/product/product.module';
+import { OrderModule } from '@/modules/shoppingCart/order/order.module';
+import { GroupBuyModule } from '@/modules/shoppingCart/groupbuy/groupbuy.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 @Module({
@@ -31,10 +31,10 @@ import { join } from 'path';
     MailModule,
     SmsModule,
     SocketModule,
-    CartModule,
-    ProductModule,
-    OrderModule,
-    GroupBuyModule,
+    // CartModule,
+    // ProductModule,
+    // OrderModule,
+    // GroupBuyModule,
   ],
   controllers: [AppController],
   providers: [AppService],

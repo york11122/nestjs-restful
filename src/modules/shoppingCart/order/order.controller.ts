@@ -15,7 +15,7 @@ import {
 import { OrderService } from './order.service';
 import { Order } from './order.entity';
 import { JWTAuthGuard } from '@/common';
-import { CurrentUser } from '../../common/decorators/user.decorator';
+import { CurrentUser } from '../../../common/decorators/user.decorator';
 import { User } from '@/core/user/user.entity';
 
 import * as _ from 'lodash';
